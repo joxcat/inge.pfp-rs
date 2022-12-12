@@ -1,7 +1,12 @@
+[env]
+CARGO_WORKSPACE_DIR = { value = "", relative = true }
+CXX = { value = "arm-none-eabi-g++", force = true }
+
 [target.'cfg(all(target_arch = "arm", target_os = "none"))']
 # NOTE: micro:bit v1.X is `nRF51822_xxAA` and v2.X is `nRF52833_xxAA\
 runner = "probe-run --chip nRF51822_xxAA"
 rustflags = [
+  "--cfg", "cxx_experimental_no_alloc",
   "-C", "linker=flip-link",
   "-C", "link-arg=-Tlink.x",
   "-C", "link-arg=-Tdefmt.x",

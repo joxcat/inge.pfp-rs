@@ -1,9 +1,14 @@
+#![feature(alloc_error_handler)]
 #![no_main]
 #![no_std]
+
+use core::alloc::Layout;
 
 use defmt_rtt as _; // global logger
 
 use panic_probe as _;
+
+pub mod microbit;
 
 // same panicking *behavior* as `panic-probe` but doesn't print a panic message
 // this prevents the panic message being printed *twice* when `defmt::panic` is invoked
@@ -19,9 +24,11 @@ pub fn exit() -> ! {
     }
 }
 
-pub mod pin_names;
-pub mod radio;
-pub mod serial;
+#[alloc_error_handler]
+fn oom(_: Layout) -> ! {
+    // TODO: Handle out of memory
+    loop {}
+}
 
 // defmt-test 0.3.0 has the limitation that this `#[tests]` attribute can only be used
 // once within a crate. the module can be in any file but there can only be at most

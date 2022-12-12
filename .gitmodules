@@ -1,0 +1,23 @@
+; [submodule "includes/microbit-dal"]
+; 	path = includes/microbit-dal
+; 	url = https://github.com/lancaster-university/microbit-dal.git
+; 	branch = 602153e9199c28c08fd2561ce7b43bf64e9e7394
+; [submodule "includes/mbed-classic"]
+; 	path = includes/mbed-classic
+; 	url = https://github.com/lancaster-university/mbed-classic.git
+; 	branch = 03f4fbc2530071f145b2eb11a7651c93e6dc15e4
+; [submodule "includes/ble"]
+; 	path = includes/ble
+; 	url = https://github.com/lancaster-university/BLE_API.git
+; 	branch = bbc2dc58f8da1d5a6d1882dddd5ce7399dc48889
+; [submodule "includes/ble-nrf51822"]
+; 	path = includes/ble-nrf51822
+; 	url = https://github.com/lancaster-university/nrf51822
+; 	branch = 040baa12c08b439f9a09f0c1594ac625e58e2ad1
+; [submodule "includes/nrf51-sdk"]
+; 	path = includes/nrf51-sdk
+; 	url = https://github.com/lancaster-university/nrf51-sdk
+; 	branch = 85dd2e7af27edb11b056efcda34a76cf8757ef47
+[submodule "external/microbit"]
+	path = external/microbit
+	url = https://git.mob-dev.fr/Schoumi/microbit.git

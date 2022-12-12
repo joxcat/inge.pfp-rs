@@ -19,9 +19,12 @@
       url = "github:rustsec/advisory-db";
       flake = false;
     };
+    yotta = {
+      url = "github:joxcat/yotta";
+    };
   };
 
-  outputs = { self, nixpkgs, crane, flake-utils, rust-overlay, fenix, advisory-db }:
+  outputs = { self, nixpkgs, crane, flake-utils, rust-overlay, fenix, advisory-db, yotta }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
@@ -50,6 +53,7 @@
           nativeBuildInputs = with pkgs; [
             # Add extra native build inputs here, etc.
             # (TLDR: Build time)
+            yotta
           ];
         };
 
