@@ -1,9 +1,7 @@
 use std::env;
-use std::ffi::OsString;
 use std::fs::{create_dir_all, read_dir, File};
 use std::io::Write;
 use std::path::PathBuf;
-use std::str::FromStr;
 
 fn main() {
     /* === Building for embedded === */
@@ -20,12 +18,6 @@ fn main() {
     println!("cargo:rerun-if-changed=memory.x");
 
     /* === Linking to microbit libs === */
-    // let arm_eabi_lib_dir = PathBuf::from(
-    //     env::var_os("ARM_EABI_LIB_DIR")
-    //         .unwrap_or_else(|| OsString::from_str("/usr/arm-none-eabi/lib").unwrap()),
-    // )
-    // .canonicalize()
-    // .unwrap();
     let includes_dir = PathBuf::from("./includes");
     let prebuilt_dir = PathBuf::from("./prebuilts");
 
@@ -37,6 +29,15 @@ fn main() {
         create_dir_all(&prebuilt_dir).unwrap();
     }
     let prebuilt_dir = prebuilt_dir.canonicalize().unwrap();
+
+    let ordered_libs = [
+        "mbed-classic",
+        "ble",
+        "nrf51-sdk",
+        "ble-nrf51822",
+        "microbit-dal",
+        "microbit",
+    ];
 
     #[cfg(not(feature = "prebuilt"))]
     {
@@ -83,6 +84,14 @@ fn main() {
             microbit_dal_headers.join("types").join("ManagedString.h"),
         ];
 
+        // std::process::Command::new("yotta")
+        //     .args(["clean"])
+        //     .current_dir(&microbit_path)
+        //     .spawn()
+        //     .unwrap()
+        //     .wait_with_output()
+        //     .unwrap();
+
         if let Err(output) = std::process::Command::new("yotta")
             .args(["build"])
             .current_dir(&microbit_path)
@@ -111,40 +120,34 @@ fn main() {
         {
             panic!("Please build without the feature `prebuilt` to compile MicroBit from source (prebuilts not found)");
         }
-        println!(
-            "cargo:rerun-if-changed={}",
-            includes_dir.join("MicroBit.h").to_str().unwrap()
-        );
-        println!(
-            "cargo:rerun-if-changed={}",
-            prebuilt_dir.join("libmicrobit.a").to_str().unwrap()
-        );
+        for header in read_dir(&includes_dir).unwrap().flatten() {
+            println!(
+                "cargo:rerun-if-changed={}",
+                header.file_name().to_str().unwrap()
+            );
+        }
+        for lib in ordered_libs.iter() {
+            println!(
+                "cargo:rerun-if-changed={}",
+                prebuilt_dir
+                    .join(["lib", lib, ".a"].concat())
+                    .to_str()
+                    .unwrap()
+            );
+        }
     }
 
-    // NOTE: Link to required C++ deps
-    // for lib in ["m"] {
-    //     println!("cargo:rustc-link-lib={lib}");
-    // }
-
-    // println!(
-    //     "cargo:rustc-link-search=all={}",
-    //     arm_eabi_lib_dir.to_str().unwrap()
-    // );
     println!(
         "cargo:rustc-link-search=native={}",
         prebuilt_dir.to_str().unwrap()
     );
 
     // NOTE: Link to prebuilts libraries
-    for lib in read_dir(prebuilt_dir).unwrap().flatten() {
+    for lib in ordered_libs.iter() {
         println!(
-            "cargo:rustc-link-lib=static={}",
-            lib.file_name()
-                .to_str()
-                .unwrap()
-                .strip_suffix(".a")
-                .and_then(|f| f.strip_prefix("lib"))
-                .unwrap()
+            "cargo:rustc-link-lib=static:+whole-archive,-bundle={}",
+            // "cargo:rustc-link-lib=static={}",
+            lib
         );
     }
 }

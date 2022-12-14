@@ -10,8 +10,15 @@ mod ffi_example {
 */
 
 pub mod ffi {
+    use core::ffi::c_int;
+
     extern "C" {
-        #[link_name = "_Z15create_microbitv"]
-        pub fn create_microbit();
+        #[link_name = "create_microbit"]
+        pub fn create_microbit() -> c_int;
+        #[link_name = "create_serial"]
+        pub fn create_serial() -> c_int;
+
+        #[link_name = "ping"]
+        pub fn ping() -> c_int;
     }
 }

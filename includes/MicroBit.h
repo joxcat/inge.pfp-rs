@@ -371,11 +371,6 @@ class MicroBit
 	int removeIdleComponent(MicroBitComponent *component);
 };
 
-MicroBit create_microbit()
-{
-    return MicroBit();
-}
-
 /**
   * Return the friendly name for this device.
   *
@@ -658,5 +653,11 @@ inline void MicroBit::panic(int statusCode)
     //show error and enter infinite while
 	microbit_panic(statusCode);
 }
+
+// === C API ===
+
+extern "C" int create_microbit();
+extern "C" int create_serial();
+extern "C" int ping();
 
 #endif

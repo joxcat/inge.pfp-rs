@@ -17,22 +17,25 @@ rustflags = [
   "-C", "link-arg=-Wl,-Tdefmt.x",
   # This is needed if your flash or ram addresses are not aligned to 0x10000 in memory.x
   # See https://github.com/rust-embedded/cortex-m-quickstart/pull/95
-  "-C", "link-arg=-Wl,--nmagic",
+  # "-C", "link-arg=-Wl,--nmagic",
   # HACK: This is needed to ignore the transitives dependencies of linking with C++
   "-C", "link-arg=-Wl,--unresolved-symbols=ignore-in-object-files",
+  # HACK: Highly dangerous there must be a better way to do this
+  "-C", "link-arg=-Wl,-zmuldefs",
+  "-C", "link-arg=-Wl,--allow-multiple-definition",
+  # NOTE: Copied from yotta args
+  "-C", "link-arg=-std=c++11",
+  "-C", "link-arg=--specs=nano.specs",
   "-C", "link-arg=-fno-exceptions",
   "-C", "link-arg=-fno-rtti",
   "-C", "link-arg=-fno-threadsafe-statics",
   "-C", "link-arg=-fno-unwind-tables",
   "-C", "link-arg=-fwrapv",
+  "-C", "link-arg=-fdata-sections",
+  "-C", "link-arg=-ffunction-sections",
   "-C", "link-arg=-Wl,--gc-sections",
   "-C", "link-arg=-Wl,--sort-common",
   "-C", "link-arg=-Wl,--sort-section=alignment",
-  "-C", "link-arg=-Wl,--wrap=main",
-  "-C", "link-arg=--specs=nano.specs",
-  # HACK: Highly dangerous there must be a better way to do this
-  "-C", "link-arg=-Wl,-z muldefs",
-  "-C", "link-arg=-Wl,--allow-multiple-definition",
 ]
 
 [build]
