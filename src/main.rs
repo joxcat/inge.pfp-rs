@@ -17,15 +17,14 @@ static HEAP: Heap = Heap::empty();
 fn main() -> ! {
     {
         use core::mem::MaybeUninit;
-        const HEAP_SIZE: usize = 1024; // Heap Size in bytes
+        const HEAP_SIZE: usize = 128; // Heap Size in bytes
         static mut HEAP_MEM: [MaybeUninit<u8>; HEAP_SIZE] = [MaybeUninit::uninit(); HEAP_SIZE];
         unsafe { HEAP.init(HEAP_MEM.as_ptr() as usize, HEAP_SIZE) }
     }
 
-    // unsafe {
-    //     let uBit = ffi::new_microbit();
-    //     ffi::init(&uBit);
-    // };
+    unsafe {
+        let uBit = ffi::create_microbit();
+    };
 
     defmt::panic!("End");
 }

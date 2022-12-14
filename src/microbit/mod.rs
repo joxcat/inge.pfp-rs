@@ -1,12 +1,17 @@
+/*
 #[cxx::bridge]
-pub mod ffi {
+mod ffi_example {
     unsafe extern "C++" {
-        include!("../../includes/ManagedString.h");
         include!("../../includes/MicroBit.h");
 
-        pub type Microbit;
+        pub fn create_microbit();
+    }
+}
+*/
 
-        // pub fn new_microbit() -> UniquePtr<Microbit>;
-        // pub fn init(m: &UniquePtr<Microbit>);
+pub mod ffi {
+    extern "C" {
+        #[link_name = "_Z15create_microbitv"]
+        pub fn create_microbit();
     }
 }

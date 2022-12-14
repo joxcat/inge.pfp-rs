@@ -12,6 +12,8 @@
 	// 	"CARGO_TARGET_DIR": "target/ra",
 	// },
     "rust-analyzer.cargo.target": "thumbv6m-none-eabi",
+    "rust-analyzer.cargo.features": [""],
+    "rust-analyzer.cargo.noDefaultFeatures": true,    
     "rust-analyzer.checkOnSave.overrideCommand": ["cargo", "clippy", "--package=pfp", "--message-format=json", "--target=thumbv6m-none-eabi"],
     "rust-analyzer.diagnostics.enable": true,
     "rust-analyzer.diagnostics.experimental.enable": true,

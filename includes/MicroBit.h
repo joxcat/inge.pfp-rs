@@ -371,6 +371,11 @@ class MicroBit
 	int removeIdleComponent(MicroBitComponent *component);
 };
 
+MicroBit create_microbit()
+{
+    return MicroBit();
+}
+
 /**
   * Return the friendly name for this device.
   *

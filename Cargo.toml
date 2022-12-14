@@ -41,7 +41,7 @@ defmt-rtt = "0.4"
 panic-probe = { version = "0.3", features = ["print-defmt"] }
 once_cell = { version = "1.16", features = ["critical-section"], default-features = false }
 # Used to link to the C++ MicroBit library
-link-cplusplus = { version = "1.0", features = ["nothing"] }
+cxx = { version = "1.0", features = ["alloc"], default-features = false }
 # Small allocator
 embedded-alloc = "0.5"
 
