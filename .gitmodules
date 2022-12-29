@@ -18,6 +18,6 @@
 ; 	path = includes/nrf51-sdk
 ; 	url = https://github.com/lancaster-university/nrf51-sdk
 ; 	branch = 85dd2e7af27edb11b056efcda34a76cf8757ef47
-[submodule "external/microbit"]
-	path = external/microbit
-	url = https://git.mob-dev.fr/Schoumi/microbit.git
+; [submodule "external/microbit"]
+; 	path = external/microbit
+; 	url = https://git.mob-dev.fr/Schoumi/microbit.git
