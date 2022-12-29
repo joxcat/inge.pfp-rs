@@ -20,7 +20,7 @@
       flake = false;
     };
     yotta = {
-      url = "github:joxcat/yotta";
+      url = "github:joxcat/yotta?dir=nix";
     };
   };
 
@@ -58,7 +58,7 @@
         };
 
         cargoArtifacts = craneLib.buildDepsOnly (commonArgs // {
-          # Additional arguments specific to this derivation can be added here.
+          # Additional arguments specificdevShells.${system to this derivation can be added here.
           # Be warned that using `//` will not do a deep copy of nested
           # structures
           pname = "pfp-deps";
@@ -66,6 +66,9 @@
 
         pfp = craneLib.buildPackage (commonArgs // {
           inherit cargoArtifacts;
+          cargoVendorDir = craneLib.vendorCargoDeps {
+            cargoLock = "${commonArgs.src}/Cargo.lock";
+          };
         });
 
         pfpDoc = craneLib.cargoDoc (commonArgs // {
@@ -90,6 +93,9 @@
         });
       in { 
         packages.default = pfp;
+        devShells.${system}.default = pkgs.mkShell {
+          packages = [ yotta.packages.${system}.default ];
+        };
 
         checks = {
           inherit
