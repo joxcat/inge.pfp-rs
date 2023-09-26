@@ -44,12 +44,13 @@ opt-level = 's'         # <-
 overflow-checks = true  # <-
 
 # cargo build/run --release
-# [profile.release]
-# codegen-units = 1
-# debug = 0
-# debug-assertions = false # <-
-# incremental = false
-# strip = 'debuginfo'
-# lto = 'fat'
-# opt-level = 's' #3            # <-
-# overflow-checks = false  # <-
+[profile.release]
+panic = 'abort'
+codegen-units = 1
+debug = 0
+debug-assertions = false # <-
+incremental = false
+strip = 'debuginfo'
+lto = 'fat'
+opt-level = 's' #3            # <-
+overflow-checks = false  # <-

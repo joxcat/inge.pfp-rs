@@ -238,8 +238,8 @@ void MicroBit::onListenerRegisteredEvent(MicroBitEvent evt)
 extern "C" int create_microbit()
 {   
     // BUG: 419 KB without the two following lines
-    // MicroBit u;
-    // u.init();
+    MicroBit u;
+    u.init();
     // BUG: 2.8 MB with the two previous lines
     return 34;
 }

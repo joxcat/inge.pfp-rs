@@ -141,15 +141,16 @@ fn main() {
         "cargo:rustc-link-search=native={}",
         prebuilt_dir.to_str().unwrap()
     );
+    println!("cargo:rustc-link-lib=static=microbit")
 
     // NOTE: Link to prebuilts libraries
-    for lib in ordered_libs.iter() {
-        println!(
-            "cargo:rustc-link-lib=static:+whole-archive,-bundle={}",
-            // "cargo:rustc-link-lib=static={}",
-            lib
-        );
-    }
+    // for lib in ordered_libs.iter() {
+    //     println!(
+    //         "cargo:rustc-link-lib=static:+whole-archive,-bundle={}",
+    //         // "cargo:rustc-link-lib=static={}",
+    //         lib
+    //     );
+    // }
 }
 
 /* Yotta build params
